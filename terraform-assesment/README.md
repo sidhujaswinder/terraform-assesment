@@ -19,9 +19,6 @@ folder structure
     ├── main.tf
     ├── outputs.tf
     ├── provider.tf
-    ├── terraform.tfstate
-    ├── terraform.tfstate.backup
-    ├── terraform.tfvars
     └── variables.tf
 ```
 
