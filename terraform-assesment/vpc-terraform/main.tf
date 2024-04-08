@@ -6,6 +6,15 @@ provider "aws" {
 # aws default data block to fetch availablity zones
 data "aws_availability_zones" "available" {}
 
+# Data source to find the latest AMI
+data "aws_ami" "latest_ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["your-image-name*"] # Specify your image name or other criteria
+  }
+
 # local variable definition
 locals {
   azs = slice(data.aws_availability_zones.available.names, 0, 2)
@@ -146,7 +155,7 @@ module "auto_scaling" {
   update_default_version      = true
 
   # instance configurations
-  image_id          = "ami-0c7217cdde317cfec"
+  image_id          = "data.aws_ami.latest_ami.id"
   instance_type     = "t2.micro"
   user_data         = base64encode(local.user_data)
   ebs_optimized     = false
